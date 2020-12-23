@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/css/bootstrap.css';
+@import 'assets/css/fontawesome-all.css';
+@import './assets/css/jquery.smartmenus.bootstrap.css';
+@import './assets/css/jquery.simpleLens.css';
+@import './assets/css/slick.css';
+@import './assets/css/nouislider.css';
+@import './assets/css/style.css';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
