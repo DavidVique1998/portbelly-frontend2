@@ -1,0 +1,94 @@
+<!-- Cart view section -->
+<section id="aa-myaccount">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="aa-myaccount-area">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="aa-myaccount-login">
+                <h4>Login</h4>
+                <form
+                  [formGroup]="formLoginUser"
+                  (ngSubmit)="onSubmitL()"
+                  action=""
+                  class="aa-login-form"
+                >
+                  <label for="">Username<span>*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    formControlName="userNameL"
+                    [(ngModel)]="loginUser.userName"
+                  />
+                  <label for="">Password<span>*</span></label>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    formControlName="passwordL"
+                    [(ngModel)]="loginUser.password"
+                  />
+                  <button type="submit" class="aa-browse-btn">Login</button>
+                  <label class="rememberme" for="rememberme"
+                    ><input type="checkbox" id="rememberme" /> Remember me
+                  </label>
+                  <p class="aa-lost-password">
+                    <a href="#">Lost your password?</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="aa-myaccount-register">
+                <h4>Register</h4>
+                <form
+                  [formGroup]="formNewUser"
+                  (ngSubmit)="onSubmit()"
+                  action=""
+                  class="aa-login-form"
+                >
+                  <label for="">Name<span>*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    formControlName="name"
+                    [(ngModel)]="newUser.name"
+                  />
+                  <label for="">Username<span>*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    formControlName="userName"
+                    [(ngModel)]="newUser.userName"
+                  />
+                  <label for="">Email<span>*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    formControlName="email"
+                    [(ngModel)]="newUser.email"
+                  />
+                  <label for="">Password<span>*</span></label>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    formControlName="password"
+                    [(ngModel)]="newUser.password"
+                  />
+                  <label for="">Repeat Password<span>*</span></label>
+                  <input
+                    type="password"
+                    placeholder="Repeat Password"
+                    formControlName="repassword"
+                  />
+                  <button type="submit" class="aa-browse-btn">Register</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / Cart view section -->

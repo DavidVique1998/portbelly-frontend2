@@ -1,0 +1,17 @@
+<ngx-dropzone
+  (change)="onSelect($event)"
+  [multiple]="false"
+  accept="image/*"
+  [maxFileSize]="2000000"
+>
+  <ngx-dropzone-label>Sueltalo aquí, Portbelly!</ngx-dropzone-label>
+  <ngx-dropzone-image-preview
+    [removable]="true"
+    (removed)="onRemove(f)"
+    ngProjectAs="ngx-dropzone-preview"
+    *ngFor="let f of files"
+    [file]="f"
+  >
+    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+  </ngx-dropzone-image-preview>
+</ngx-dropzone>

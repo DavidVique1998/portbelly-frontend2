@@ -200,6 +200,9 @@
 .slick-prev
 {
     left: 94%;
+    background: #C762CB url('../img/slider/prev.svg') center center no-repeat;
+    /* background: #fff transparent url('../img/slider/bt-prev@2x.png') no-repeat; */
+    background-size: 50%;
 }
 [dir='rtl'] .slick-prev
 {
@@ -208,16 +211,19 @@
 }
 .slick-prev:before
 {
-    content: '\f104';
+    /* content: '\f053'; */
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '\f104';
+    /* content: '\f053'; */
 }
 
 .slick-next
 {
     right: 0;
+    background: #C762CB url('../img/slider/next.svg') center center no-repeat;
+    /* background:  transparent url('../img/slider/bt-next@2x.png') no-repeat; */
+    background-size: 50%;
 }
 [dir='rtl'] .slick-next
 {
@@ -226,11 +232,15 @@
 }
 .slick-next:before
 {
-    content: '\f105';
+    /* content: '\f054'; */
+    /* background: transparent url('../img/slider/bt-next@2x.png') no-repeat;
+    background-size: 50%; */
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '\f105';
+    /* content: '\f054'; */
+    /* background: transparent url('../img/slider/bt-next@2x.png') no-repeat;
+    background-size: 50%; */
 }
 
 /* Dots */
