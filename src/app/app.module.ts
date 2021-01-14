@@ -13,6 +13,7 @@ import { ProductAdminComponent } from './components/admin/product-admin/product-
 import { ProductCreateComponent } from './components/admin/product-admin/product-create/product-create.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { interceptorProvider } from './interceptors/service.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     NgxDropzoneModule,
     FileUploadModule,
   ],
-  providers: [],
+  providers: [interceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

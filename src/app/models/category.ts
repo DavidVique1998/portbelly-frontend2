@@ -1,6 +1,6 @@
 export class Category {
   idCategory: number;
-  are: string;
+  area: string;
   name: string;
   logicDelet: boolean;
 }

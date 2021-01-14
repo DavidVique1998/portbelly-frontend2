@@ -1,17 +1,224 @@
-<ngx-dropzone
-  (change)="onSelect($event)"
-  [multiple]="false"
-  accept="image/*"
-  [maxFileSize]="2000000"
->
-  <ngx-dropzone-label>Sueltalo aquí, Portbelly!</ngx-dropzone-label>
-  <ngx-dropzone-image-preview
-    [removable]="true"
-    (removed)="onRemove(f)"
-    ngProjectAs="ngx-dropzone-preview"
-    *ngFor="let f of files"
-    [file]="f"
-  >
-    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-  </ngx-dropzone-image-preview>
-</ngx-dropzone>
+<section id="aa-myaccount">
+  <div class="container" style="padding-top: 1%; padding-bottom: 2%">
+    <div class="row">
+      <!-- Modal view slider -->
+      <div class="col-md-5 col-sm-5 col-xs-12">
+        <div class="aa-product-view-slider">
+          <div
+            class="simpleLens-gallery-container"
+            id="demo-1"
+            style="display: flex; justify-content: center; text-align: center"
+          >
+            <div class="simpleLens-container">
+              <div class="simpleLens-big-image-container">
+                <ngx-dropzone
+                  (change)="onSelect($event)"
+                  [multiple]="false"
+                  accept="image/*"
+                  [maxFileSize]="2000000"
+                >
+                  <ngx-dropzone-label
+                    >Sueltalo aquí, Portbelly!</ngx-dropzone-label
+                  >
+                  <ngx-dropzone-image-preview
+                    [removable]="true"
+                    (removed)="onRemove(f)"
+                    ngProjectAs="ngx-dropzone-preview"
+                    *ngFor="let f of files"
+                    [file]="f"
+                  >
+                    <ngx-dropzone-label
+                      >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+                    >
+                  </ngx-dropzone-image-preview>
+                </ngx-dropzone>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal view content -->
+      <div class="col-md-7 col-sm-7 col-xs-12">
+        <div class="aa-product-view-content">
+          <form
+            [formGroup]="formProduct"
+            (ngSubmit)="onSubmit()"
+            action=""
+            class="aa-login-form"
+          >
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="">Área<span>*</span></label>
+
+                <div class="select">
+                  <select
+                    formControlName="area"
+                    #selectArea
+                    [(ngModel)]="product.category.area"
+                    (change)="getCategories(selectArea.value)"
+                    required
+                  >
+                    <option *ngIf="areas?.length !== 0" selected disabled>
+                      Escoge una opción
+                    </option>
+                    <option *ngIf="areas?.length === 0" selected>
+                      Crea una categoría
+                    </option>
+                    <option *ngFor="let item of areas" [value]="item">
+                      {{ item }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="">Categoría<span>*</span></label>
+
+                <div class="select">
+                  <select
+                    formControlName="category"
+                    [(ngModel)]="product.category.idCategory"
+                    required
+                  >
+                    <option *ngIf="categories.length != 0" selected disabled>
+                      Escoge una opción
+                    </option>
+                    <option *ngIf="categories.length == 0" selected disabled>
+                      Selecciona una Área
+                    </option>
+                    <option
+                      *ngFor="let item of categories"
+                      [value]="item.idCategory"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="">Promoción<span>*</span></label>
+                <div class="select">
+                  <select
+                    formControlName="promotion"
+                    [(ngModel)]="product.promotion.idPromotion"
+                    required
+                  >
+                    <option *ngIf="promotions.length != 0" selected disabled>
+                      Escoge una opción
+                    </option>
+                    <option *ngIf="promotions.length == 0" selected>
+                      Crea una promoción
+                    </option>
+                    <option
+                      *ngFor="let item of promotions"
+                      [value]="item.idPromotion"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <label for="">Nombre<span>*</span></label>
+            <input
+              type="text"
+              placeholder="Nombre"
+              formControlName="name"
+              [(ngModel)]="product.name"
+            />
+
+            <!-- Sizes -->
+            <label for="">Tallas<span>*</span></label>
+            <div formArrayName="sizes">
+              <ul style="display: inline-block" class="ks-cboxtags">
+                <li
+                  *ngFor="let item of getSizes.controls; let pointIndex = index"
+                  [formGroupName]="pointIndex"
+                >
+                  <input
+                    type="checkbox"
+                    [attr.id]="'checkbox' + pointIndex"
+                    value="XXL"
+                    [checked]="item.value.size.checked"
+                    (change)="updateCheckedSize(pointIndex, $event)"
+                  /><label [attr.for]="'checkbox' + pointIndex">{{
+                    sizes[pointIndex]
+                  }}</label>
+                </li>
+              </ul>
+            </div>
+            <!-- End sizes -->
+            <label for="">Características<span>*</span></label
+            ><br />
+            <textarea
+              style="width: 100%"
+              type="text"
+              placeholder="Características"
+              formControlName="characteristics"
+              [(ngModel)]="product.characteristics"
+            >
+            </textarea>
+            <label for="">Cantidades<span>*</span></label
+            ><br />
+            <input
+              type="number"
+              min="1"
+              pattern="^[0-9]+"
+              placeholder="Cantidades"
+              formControlName="quantity"
+              [(ngModel)]="product.quantity"
+            />
+            <br />
+            <label for="">Precio<span>*</span></label
+            ><br />
+            <input
+              min="0.10"
+              type="number"
+              placeholder="Precio"
+              formControlName="price"
+              [(ngModel)]="product.price"
+            />
+            <br />
+            <label for="">Colores<span>*</span></label>
+            <div
+              class="aa-prod-view-bottom"
+              style="display: inline; margin-left: 5px"
+            >
+              <a
+                style="cursor: pointer"
+                class="aa-add-to-cart-btn"
+                (click)="addColor()"
+                >+</a
+              >
+            </div>
+            <div formArrayName="colors">
+              <div
+                *ngFor="let item of getColors.controls; let pointIndex = index"
+                [formGroupName]="pointIndex"
+                style="display: inline-block"
+              >
+                <input
+                  formControlName="color"
+                  type="color"
+                  id="head"
+                  name="head"
+                  value="#e66465"
+                  style="margin-top: 10px; margin-right: 10px; height: 40px"
+                />
+                <a
+                  class="aa-remove-product"
+                  style="cursor: pointer; float: left"
+                  (click)="removeColor(pointIndex)"
+                  ><span class="fa fa-times"></span>
+                </a>
+                <!-- <div class="boton"><a href="#">hola</a></div> -->
+              </div>
+            </div>
+            <button type="submit" class="aa-browse-btn">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <span class="fa fa-shopping-cart"></span> -->

@@ -25,7 +25,7 @@
             <!-- start header top left -->
             <div class="aa-header-top-left">
               <!-- start language -->
-              <div class="aa-language">
+              <!-- <div class="aa-language">
                 <div class="dropdown">
                   <a
                     class="btn dropdown-toggle"
@@ -61,11 +61,11 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
               <!-- / language -->
 
               <!-- start currency -->
-              <div class="aa-currency">
+              <!-- <div class="aa-currency">
                 <div class="dropdown">
                   <a
                     class="btn dropdown-toggle"
@@ -88,34 +88,34 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
               <!-- / currency -->
               <!-- start cellphone -->
               <div class="cellphone hidden-xs">
-                <p><span class="fa fa-phone"></span>00-62-658-658</p>
+                <p><span class="fa fa-phone"></span>000-099-252-0223</p>
               </div>
               <!-- / cellphone -->
             </div>
             <!-- / header top left -->
             <div class="aa-header-top-right">
               <ul class="aa-head-top-nav-right">
-                <li *ngIf="logged"><a href="account.html">My Account</a></li>
+                <li *ngIf="logged"><a href="account.html">Cuenta</a></li>
                 <li class="hidden-xs">
-                  <a href="wishlist.html">Wishlist</a>
+                  <a href="wishlist.html">Lista de Deseos</a>
                 </li>
-                <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
+                <li class="hidden-xs"><a href="cart.html">Carrito</a></li>
                 <li class="hidden-xs">
-                  <a href="checkout.html">Checkout</a>
+                  <a href="checkout.html">Compras</a>
                 </li>
                 <li style="cursor: pointer" *ngIf="!logged">
-                  <a data-toggle="modal" data-target="#login-modal">Login</a>
+                  <a data-toggle="modal" data-target="#login-modal">Ingresar</a>
                 </li>
                 <li
                   style="cursor: pointer"
                   *ngIf="logged"
                   (click)="onSignOut()"
                 >
-                  <a routerLink="">Out</a>
+                  <a routerLink="">Salir</a>
                 </li>
               </ul>
             </div>
@@ -138,12 +138,14 @@
               <a routerLink="">
                 <span class="fa fa-shopping-cart"> </span>
                 <p>
-                  daily<strong>Shop</strong>
-                  <span>Your Shopping Partner</span>
+                  port<strong>Belly</strong>
+                  <span>Tu socio de compras</span>
                 </p>
               </a>
               <!-- img based logo -->
-              <!-- <a href="index.html"><img src="../assets/img/logo.jpg" alt="logo img"></a> -->
+              <!-- <a href="index.html"
+                ><img src="../assets/img/logo.jpg" alt="logo img"
+              /></a> -->
             </div>
             <!-- / logo  -->
             <!-- cart box -->

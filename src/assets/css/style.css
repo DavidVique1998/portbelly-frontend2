@@ -2605,7 +2605,7 @@ img {
 
 /*---- Login form ----*/
 
-.aa-login-form input[type="text"],
+.aa-login-form input[type="text"],.aa-login-form input[type="number"],
 .aa-login-form input[type="password"] {
   border: 1px solid #ccc;
   font-size: 16px;
@@ -2614,6 +2614,8 @@ img {
   padding: 10px;
   width: 100%;
 }
+
+
 .aa-login-form label {
   font-weight: normal;
   margin-top: 8px;
@@ -3151,6 +3153,8 @@ img {
   display: block;
 }
 .aa-blog-details #respond input[type="text"],
+.aa-blog-details #respond textarea,
+.aa-blog-details #respond input[type="number"],
 .aa-blog-details #respond input[type="email"],
 .aa-blog-details #respond input[type="url"] {
   color: #555;

@@ -5,15 +5,17 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/product';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  path: string = "/product";
-  userPath: string = "/user" + this.path;
   url = `${environment.rootUrl}`;
+  path: string = "/product";
+  publicPath: string = "/public" + this.path;
+
 
   httpOptionsJsonPublic = {
     headers: new HttpHeaders({
@@ -32,20 +34,19 @@ export class ProductService {
 
   httpOptionsJsonToken = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    })
-  };
+      Authorization: 'Bearer ' + this.tokenService.getToken(),
 
-  constructor(private httpClient: HttpClient) { }
+    })
+  }
+
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   /**
    * list
    */
   list(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(this.url + this.userPath, this.httpOptionsJsonPublic)
+    return this.httpClient.get<Product[]>(this.url + this.publicPath, this.httpOptionsJsonPublic)
       .pipe(
         retry(1)
       );
@@ -71,16 +72,24 @@ export class ProductService {
    * createWithImage
    */
   createWithImage(f: File, p: Product): Observable<any> {
+    console.log(f);
+    console.log(p);
     const fd = new FormData();
-    fd.append('file', f, f.name);
+    fd.append('file', f);
     fd.append('object', JSON.stringify(p));
-    return this.httpClient.post<Product[]>(this.url + '/withImage', p, this.httpOptionsJsonToken);
+    return this.httpClient.post<Product[]>(this.url + this.path + '/withimage', fd, this.httpOptionsJsonToken);
   }
 
   /**
    * create
    */
   create(p: Product): Observable<any> {
+    this.httpOptionsJsonToken = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+
+      })
+    }
     return this.httpClient.post<Product[]>(this.url, p, this.httpOptionsJsonToken);
   }
 
@@ -97,6 +106,12 @@ export class ProductService {
    * update
    */
   update(p: Product): Observable<any> {
+    this.httpOptionsJsonToken = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+
+      })
+    }
     // const alumnoBody = JSON.stringify(p);
     return this.httpClient.put<any>(this.url, p, this.httpOptionsJsonToken).pipe(
       retry(1)
