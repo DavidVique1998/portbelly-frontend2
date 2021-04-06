@@ -14,6 +14,10 @@ import { ProductCreateComponent } from './components/admin/product-admin/product
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { interceptorProvider } from './interceptors/service.interceptor';
+import { MediatorComponent } from './components/mediator/mediator.component';
+import { ProductListPublicComponent } from './components/public/product-list-public/product-list-public.component';
+import { ProductViewPublicComponent } from './components/public/product-view-public/product-view-public.component';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +27,9 @@ import { interceptorProvider } from './interceptors/service.interceptor';
     HomeComponent,
     ProductAdminComponent,
     ProductCreateComponent,
+    MediatorComponent,
+    ProductListPublicComponent,
+    ProductViewPublicComponent,
 
   ],
   imports: [

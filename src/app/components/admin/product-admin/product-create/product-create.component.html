@@ -27,11 +27,33 @@
                     *ngFor="let f of files"
                     [file]="f"
                   >
-                    <ngx-dropzone-label
-                      >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
-                    >
                   </ngx-dropzone-image-preview>
                 </ngx-dropzone>
+                <br />
+                <!-- Selector de archivos -->
+                <file-upload
+                  simple
+                  name="files"
+                  [(ngModel)]="files"
+                  [control]="fileUploadControl"
+                  accept="image/*"
+                  (change)="dropped()"
+                >
+                  <ng-template let-file #placeholder>
+                    <ng-container *ngIf="files.length != 0; else emptyList">
+                      {{ file.name }}
+                    </ng-container>
+
+                    <ng-template #emptyList>
+                      Selecciona un archivo...
+                    </ng-template>
+                  </ng-template>
+
+                  <ng-template let-control="control" #button
+                    ><i class="fas fa-upload"></i> Buscar</ng-template
+                  >
+                </file-upload>
+                <!-- Fin de selector de archivos -->
               </div>
             </div>
           </div>
@@ -58,10 +80,10 @@
                     (change)="getCategories(selectArea.value)"
                     required
                   >
-                    <option *ngIf="areas?.length !== 0" selected disabled>
+                    <option *ngIf="areas?.length !== 0" value="false" selected>
                       Escoge una opción
                     </option>
-                    <option *ngIf="areas?.length === 0" selected>
+                    <option *ngIf="areas?.length === 0" value="false" selected>
                       Crea una categoría
                     </option>
                     <option *ngFor="let item of areas" [value]="item">
@@ -80,10 +102,10 @@
                     [(ngModel)]="product.category.idCategory"
                     required
                   >
-                    <option *ngIf="categories.length != 0" selected disabled>
+                    <option *ngIf="categories.length != 0" value="-1" selected>
                       Escoge una opción
                     </option>
-                    <option *ngIf="categories.length == 0" selected disabled>
+                    <option *ngIf="categories.length == 0" value="-1" selected>
                       Selecciona una Área
                     </option>
                     <option
@@ -103,10 +125,10 @@
                     [(ngModel)]="product.promotion.idPromotion"
                     required
                   >
-                    <option *ngIf="promotions.length != 0" selected disabled>
+                    <option *ngIf="promotions.length != 0" value="-1" selected>
                       Escoge una opción
                     </option>
-                    <option *ngIf="promotions.length == 0" selected>
+                    <option *ngIf="promotions.length == 0" value="-1" selected>
                       Crea una promoción
                     </option>
                     <option
@@ -129,7 +151,19 @@
 
             <!-- Sizes -->
             <label for="">Tallas<span>*</span></label>
-            <div formArrayName="sizes">
+            <!-- <div
+              class="aa-prod-view-bottom"
+              style="display: inline; margin-left: 5px; margin-bottom: 5%"
+              *ngIf="getColors.controls.length < 41"
+            >
+              <a
+                style="cursor: pointer; margin-bottom: 5px"
+                class="aa-add-to-cart-btn"
+                (click)="addColor()"
+                >+</a
+              >
+            </div> -->
+            <div formArrayName="sizes" style="text-align: center">
               <ul style="display: inline-block" class="ks-cboxtags">
                 <li
                   *ngFor="let item of getSizes.controls; let pointIndex = index"
@@ -152,6 +186,7 @@
             ><br />
             <textarea
               style="width: 100%"
+              rows="4"
               type="text"
               placeholder="Características"
               formControlName="characteristics"
@@ -182,16 +217,17 @@
             <label for="">Colores<span>*</span></label>
             <div
               class="aa-prod-view-bottom"
-              style="display: inline; margin-left: 5px"
+              style="display: inline; margin-left: 5px; margin-bottom: 5%"
+              *ngIf="getColors.controls.length < 41"
             >
               <a
-                style="cursor: pointer"
+                style="cursor: pointer; margin-bottom: 5px"
                 class="aa-add-to-cart-btn"
                 (click)="addColor()"
                 >+</a
               >
             </div>
-            <div formArrayName="colors">
+            <div formArrayName="colors" class="container-fluid">
               <div
                 *ngFor="let item of getColors.controls; let pointIndex = index"
                 [formGroupName]="pointIndex"
@@ -203,7 +239,12 @@
                   id="head"
                   name="head"
                   value="#e66465"
-                  style="margin-top: 10px; margin-right: 10px; height: 40px"
+                  style="
+                    margin-top: 10px;
+                    margin-right: 10px;
+                    height: 50px;
+                    width: 60px;
+                  "
                 />
                 <a
                   class="aa-remove-product"
@@ -211,7 +252,15 @@
                   (click)="removeColor(pointIndex)"
                   ><span class="fa fa-times"></span>
                 </a>
+
                 <!-- <div class="boton"><a href="#">hola</a></div> -->
+              </div>
+              <div style="width: 100%; text-align: right">
+                <small style="text-align: right; display: inline"
+                  >({{
+                    getColors.controls.length.toString() + " | max: 41"
+                  }})</small
+                >
               </div>
             </div>
             <button type="submit" class="aa-browse-btn">Guardar</button>

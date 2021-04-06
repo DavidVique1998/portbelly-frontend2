@@ -4,6 +4,7 @@ import { ProductCreateComponent } from './components/admin/product-admin/product
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { HomeComponent } from './components/public/home/home.component';
 import { AuthGuard as guard } from '../app/guards/auth.guard'
+import { ProductListPublicComponent } from './components/public/product-list-public/product-list-public.component';
 
 
 const routes: Routes = [
@@ -23,10 +24,10 @@ const routes: Routes = [
     data: { expectedRol: ['admin'] }
   },
   {
-    path: 'product/store',
-    component: ProductCreateComponent,
+    path: 'product/list/client',
+    component: ProductListPublicComponent,
     canActivate: [guard],
-    data: { expectedRol: ['admin', 'user'] }
+    data: { expectedRol: ['user'] }
   }
 ];
 

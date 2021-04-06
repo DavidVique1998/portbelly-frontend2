@@ -61,7 +61,7 @@ export class SignInComponent implements OnInit {
       this.tokenService.setUserName(result.userName);
       this.tokenService.setAuthorities(result.authorities);
       this.tokenService.isLogged();
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
       window.location.reload();
       alert('Usuario Logeado');
     }, err => {

@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ProductCreateComponent } from '../components/admin/product-admin/product-create/product-create.component';
 import { Product } from '../models/product';
 import { TokenService } from './token.service';
 
@@ -16,6 +16,7 @@ export class ProductService {
   path: string = "/product";
   publicPath: string = "/public" + this.path;
 
+  public pathImages = this.url + '/images/';
 
   httpOptionsJsonPublic = {
     headers: new HttpHeaders({
@@ -28,7 +29,7 @@ export class ProductService {
   };
   httpOptionsMultiPart = {
     headers: new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + this.tokenService.getToken(),
     })
   };
 
@@ -40,6 +41,8 @@ export class ProductService {
     })
   }
 
+  //Products View
+  array: Array<Product> = [];
   constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   /**
@@ -122,5 +125,57 @@ export class ProductService {
    */
   getProductPenInCartByCli(id: number): Observable<any> {
     return this.httpClient.get<Product[]>(this.url + '/' + 'MisProductosEnCarritoPen?id=' + id, this.httpOptionsJsonToken).pipe(retry(1));
+  }
+
+  /**
+   * Local Storage And Session Storage
+   */
+
+  /**
+   * @name addProductsView
+   * @desc Set a product in local Storage productsView
+   */
+  addProductsView(p: Product) {
+    if (!localStorage.getItem('productsView')) {
+      this.createProductsView();
+    }
+    this.array = JSON.parse(localStorage.getItem('productsView'));
+    this.deleteproductReview(p);
+    // this.array = this.array.filter(e => e.idProduct != p.idProduct);
+    this.array.unshift(p);
+    localStorage.setItem('productsView', JSON.stringify(this.array));
+  }
+
+  /**
+   * @name getProductsView
+   * @desc get list of products view in local Storage productsView
+   */
+  get getProductsView(): Array<Product> {
+    if (!localStorage.getItem('productsView')) {
+      this.createProductsView();
+    }
+    this.array = JSON.parse(localStorage.getItem('productsView'));
+    return this.array;
+  }
+
+  /**
+ * @name createProductsView
+ * @desc create a products view in local Storage productsView
+ */
+  createProductsView(): void {
+    if (!localStorage.getItem('productsView')) {
+      this.array = [];
+      localStorage.setItem('productsView', JSON.stringify(this.array));
+    }
+  }
+
+
+  /**
+   * @name deleteproductReview
+   * @desc delete Product and reduce list to 3 elements, before of add  new product
+   */
+
+  deleteproductReview(p: Product): void {
+    this.array = this.array.filter(e => e.idProduct != p.idProduct).slice(0, 2);
   }
 }

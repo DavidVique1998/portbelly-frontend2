@@ -19,7 +19,14 @@
     formControlName="passwordL"
     [(ngModel)]="loginUser.password"
   />
-  <button class="aa-browse-btn" type="submit">Login</button>
+  <button
+    class="aa-browse-btn"
+    type="submit"
+    (click)="onSubmit()"
+    [attr.data-dismiss]="'modal'"
+  >
+    Login
+  </button>
   <label for="rememberme" class="rememberme"
     ><input type="checkbox" id="rememberme" /> Remember me
   </label>

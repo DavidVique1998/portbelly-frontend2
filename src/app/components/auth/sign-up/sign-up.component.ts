@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
       userName: ['', [Validators.required]],
       password: ['', [Validators.required]],
       repassword: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
     })
 
     this.loginUser = new LoginUser();

@@ -1,0 +1,293 @@
+<figure>
+  <a class="aa-product-img" href="#"
+    ><img
+      [src]="path + product?.image"
+      [alt]="product?.category.name + '|' + product.name"
+  /></a>
+  <a
+    class="aa-add-card-btn"
+    style="cursor: pointer"
+    data-toggle="modal"
+    [attr.data-target]="'#quick-view-modal' + product?.idProduct"
+    ><span class="fa fa-shopping-cart"></span>Add To Cart</a
+  >
+  <figcaption>
+    <h4 class="aa-product-title">
+      <a *ngIf="product.name" href="#">{{ product.name }}</a>
+      <a *ngIf="!product.name" href="#">Sin título</a>
+    </h4>
+    <span class="aa-product-price">${{ product.price }}</span
+    ><span *ngIf="product.oldPrice" class="aa-product-price"
+      ><del>${{ product.oldPrice }}</del></span
+    >
+    <p class="aa-product-descrip">
+      {{ product.characteristics }}
+    </p>
+  </figcaption>
+</figure>
+<div class="aa-product-hvr-content">
+  <a
+    *ngIf="!action?.myLike"
+    style="cursor: pointer"
+    data-toggle="tooltip"
+    data-placement="top"
+    checked
+    title="Add to Wishlist"
+    (click)="setLike(true)"
+    ><span class="far fa-heart"></span
+  ></a>
+  <a
+    *ngIf="action?.myLike"
+    style="cursor: pointer; color: red"
+    data-toggle="tooltip"
+    data-placement="top"
+    checked
+    title="Delete to Wishlist"
+    (click)="setLike(false)"
+    ><span class="far fa-heart"></span
+  ></a>
+  <a
+    style="cursor: pointer"
+    data-toggle2="tooltip"
+    data-placement="top"
+    (click)="addProductView()"
+    title="Quick View"
+    data-toggle="modal"
+    [attr.data-target]="'#quick-view-modal' + product?.idProduct"
+    ><span class="fa fa-search"></span
+  ></a>
+</div>
+<!-- product badge -->
+<span
+  class="aa-badge aa-sale"
+  [style.background-color]="product.promotion.color"
+  href="#"
+  >{{ product.promotion.name }}!</span
+>
+<!-- quick view modal -->
+<div
+  class="quick-view-modal modal fade"
+  [attr.id]="'quick-view-modal' + product?.idProduct"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          &times;
+        </button>
+        <div class="row">
+          <!-- Modal view slider -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="aa-product-view-slider">
+              <div class="simpleLens-gallery-container" id="demo-1">
+                <div class="simpleLens-container">
+                  <div class="simpleLens-big-image-container">
+                    <a
+                      class="simpleLens-lens-image"
+                      data-lens-image="img/view-slider/large/polo-shirt-1.png"
+                    >
+                      <img
+                        [src]="path + product.image"
+                        class="simpleLens-big-image"
+                      />
+                    </a>
+
+                    <small>
+                      Agregado:
+                      {{ product.dateOfCreated | date: "shortDate" }}
+                    </small>
+                    |
+                    <small>
+                      Código:
+                      {{ product.idProduct }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal view content -->
+          <div class="col-md-6 col-sm-6 col-xs-12" style="text-align: left">
+            <form
+              [formGroup]="formProduct"
+              (ngSubmit)="onSubmit()"
+              action=""
+              class="aa-login-form"
+            >
+              <div class="aa-product-view-content">
+                <h3>{{ product.name }}</h3>
+                <div class="aa-price-block">
+                  <span class="aa-product-view-price"
+                    >${{ product.price }}</span
+                  >
+                  <p
+                    *ngIf="product.quantity > 0"
+                    class="aa-product-avilability"
+                  >
+                    Disponiblidad: <span>En stock</span>
+                  </p>
+                  <p
+                    *ngIf="product.quantity <= 0"
+                    class="aa-product-avilability"
+                  >
+                    Disponiblidad: <span>Agotado</span>
+                  </p>
+                </div>
+                <br />
+
+                <p>{{ product.characteristics }}</p>
+                <!-- Sizes -->
+                <h4>Talla<span style="color: red">*</span></h4>
+                <div formArrayName="sizes">
+                  <ul
+                    style="
+                      display: table;
+                      margin-left: auto;
+                      margin-right: auto;
+                      padding: 5px;
+                    "
+                    class="ks-cboxtags"
+                  >
+                    <li
+                      *ngFor="
+                        let item of getSizesControl.controls;
+                        let pointIndex = index
+                      "
+                      [formGroupName]="pointIndex"
+                      style="margin: 0%; width: auto; height: auto"
+                    >
+                      <input
+                        type="checkbox"
+                        [attr.id]="'checkbox' + product.idProduct + pointIndex"
+                        [value]="item.value.size.value"
+                        [checked]="item.value.size.checked"
+                        (change)="updateCheckedSize(pointIndex, $event)"
+                      /><label
+                        [attr.for]="'checkbox' + product.idProduct + pointIndex"
+                        ><small>{{ sizes[pointIndex] }}</small>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+                <!-- End sizes -->
+
+                <!-- Colors -->
+                <h4>Color<span style="color: red">*</span></h4>
+                <div formArrayName="colors">
+                  <ul
+                    style="
+                      display: table;
+                      margin-left: auto;
+                      margin-right: auto;
+                    "
+                    class="ks-cboxtags"
+                  >
+                    <li
+                      *ngFor="
+                        let item of getColorsControl.controls;
+                        let pointIndex = index
+                      "
+                      [formGroupName]="pointIndex"
+                      style="margin: 0%; width: auto; height: auto"
+                    >
+                      <input
+                        type="checkbox"
+                        [attr.id]="
+                          'checkbox' +
+                          product.idProduct +
+                          product.colors +
+                          pointIndex
+                        "
+                        [value]="item.value.color.value"
+                        [checked]="item.value.color.checked"
+                        (change)="updateCheckedColor(pointIndex, $event)"
+                        style="border-width: 3"
+                      /><label
+                        [attr.for]="
+                          'checkbox' +
+                          product.idProduct +
+                          product.colors +
+                          pointIndex
+                        "
+                        style="
+                          width: 40px;
+                          height: 30px;
+                          margin: 5px;
+                          padding: 5px;
+                        "
+                        [style.background-color]="item.value.color.value"
+                      >
+                      </label>
+                      <br style="padding: 0; margin: 0" />
+                      <small *ngIf="item.value.color.checked">
+                        <!-- "Seleccionado" -->
+                        <i class="fas fa-arrow-up"></i>
+                      </small>
+                    </li>
+                  </ul>
+                </div>
+                <!-- End Colors -->
+                <div class="aa-prod-quantity">
+                  <h4 style="display: inline">
+                    Cantidad<span style="color: red">*</span>:
+                  </h4>
+
+                  <select
+                    formControlName="quantity"
+                    #selectQuantity
+                    [(ngModel)]="productInCart.quantity"
+                    placeholder="0"
+                  >
+                    <option value="0" selected="0">0</option>
+                    <option
+                      *ngFor="
+                        let item of [].constructor(product.quantity);
+                        let i = index
+                      "
+                      [value]="i + 1"
+                    >
+                      {{ i + 1 }}
+                    </option>
+                  </select>
+                  <p class="aa-prod-quantity" style="text-align: right">
+                    <small
+                      >Categoría: <a>{{ product.category.name }}</a> | Área:
+                      <a>{{ product.category.area }}</a>
+                    </small>
+                  </p>
+                </div>
+                <div class="aa-prod-view-bottom">
+                  <a
+                    type="submit"
+                    (click)="onSubmit()"
+                    style="cursor: pointer"
+                    class="aa-add-to-cart-btn"
+                    ><span class="fa fa-shopping-cart"></span>Add To Cart</a
+                  >
+                  <a
+                    style="cursor: pointer"
+                    data-dismiss="modal"
+                    class="aa-add-to-cart-btn"
+                    >View Details</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- / quick view modal -->

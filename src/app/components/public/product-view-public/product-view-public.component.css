@@ -1,29 +1,4 @@
-ngx-dropzone{
-  width: 20vw;
-  height: 30vh !important;
-  min-height: 40px !important;
-  min-width: 90% !important;
-  max-width: 100% !important;
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: auto;
-}
-
-ngx-dropzone-image-preview{
-  width: 50vh !important;
-  height: 25vh !important;
-  max-width: 30vh !important;
-  max-height: 30vh !important;
-}
-ngx-dropzone-label{
-  text-align: center;
-  align-items: center;
-}
-
-
-
-
+/* My css  */
 /* Inputs  */
 
 input:hover {
@@ -201,13 +176,4 @@ border: 1px solid #C762CB;
 ul.ks-cboxtags li input[type="checkbox"]:hover + label {
   border: 1px solid #C762CB;
   }
-
-@media only screen and (max-width: 750px) {
-  ngx-dropzone{
-    width: 90vw;
-    height: 35vh !important;
-  }
-}
-
-
-/* Labs */
+/* End My Css */

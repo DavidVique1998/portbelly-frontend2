@@ -27,13 +27,17 @@ export class ProductCreateComponent implements OnInit {
   path: string = `${environment.rootUrl}/images/`;
   fileUploadControl = new FileUploadControl([FileUploadValidators.fileSize(2000000), FileUploadValidators.accept(['image/'])]);
   files: File[] = [];
+  file: File;
   //Categories
+  area: String;
   areas: Array<String> = [];
   categories: Array<Category> = [];
   //Promotion
   promotions: Array<Promotion> = [];
   //Sizes
   sizes: Array<string> = [];
+  //Colors
+
 
 
   constructor(private productService: ProductService, private formBuilder: FormBuilder, private categoryService: CategoryService, private promotionService: PromotionService) {
@@ -48,9 +52,9 @@ export class ProductCreateComponent implements OnInit {
       characteristics: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      promotion: ['', [Validators.required]],//
-      area: ['', [Validators.required]],//
-      category: ['', [Validators.required]],//
+      promotion: [[Validators.required]],//
+      area: [[Validators.required]],//
+      category: [[Validators.required]],//
       colors: this.formBuilder.array([this.formBuilder.group({ color: ['#000000'] })]),
     })
   }
@@ -106,7 +110,6 @@ export class ProductCreateComponent implements OnInit {
    * onSubmit
    */
   public onSubmit() {
-    console.log(this.product);
     if (this.formProduct.invalid) {
       // Swal.fire({
       //   title: 'Error',
@@ -119,12 +122,27 @@ export class ProductCreateComponent implements OnInit {
       return;
     }
 
+    if (this.product.category.area == "-1") {
+      alert('Selecciona una Area');
+    }
+    if (this.product.category.idCategory == -1) {
+      alert('Selecciona una Categoría');
+    }
+    if (this.product.promotion.idPromotion == -1) {
+      alert('Selecciona una Promoción');
+    }
+
     this.product.colors = this.convertColorToString();
-    if (this.product.colors == null)
+    if (this.product.colors == null) {
       alert('Selecciona un color');
+      return;
+    }
     this.product.sizes = this.convertSizesToString();
-    if (this.product.sizes == null)
+    if (this.product.sizes == null) {
       alert('Selecciona una talla');
+      return;
+    }
+    alert("Las tallas o colores repetidos se eliminarán")
     this.productService.createWithImage(this.fileToUpload, this.product).subscribe(result => {
       alert('Producto registrado');
       //Developer
@@ -137,7 +155,7 @@ export class ProductCreateComponent implements OnInit {
  * onReset
  */
   public onReset() {
-    this.formProduct.reset();
+    // this.formProduct.reset();
     this.refactorSizes(this.sizes);
     this.product = new Product();
     this.promotion = new Promotion();
@@ -159,9 +177,15 @@ export class ProductCreateComponent implements OnInit {
  * getCategories
  */
   public getCategories(area: String) {
-    this.categoryService.listCategories(area).subscribe(result => {
-      this.categories = result;
-    })
+    if (area != "false") {
+      this.categoryService.listCategories(area).subscribe(result => {
+        this.categories = result;
+      })
+    }
+    else {
+      this.categories = [];
+    }
+
   }
   /**
    * getPromotion
@@ -189,9 +213,8 @@ export class ProductCreateComponent implements OnInit {
   }
 
   convertColorToString(): string {
-    alert('Los colores repetidos se eliminarán');
     let cols: Array<string> = [];
-    let colors = ';';
+    let colors = '';
     const control = <FormArray>this.formProduct.controls['colors'];
     control.value.forEach(element => {
       if (element.color != null || element.color != "" || element.color != "null") {
@@ -232,7 +255,6 @@ export class ProductCreateComponent implements OnInit {
   }
   //Convert the formArray of sizes to String separated ";"
   convertSizesToString(): string {
-    alert('Las tallas repetidas serán eliminadas');
     let sizs: Array<string> = [];
     let sizes = ';';
     const control = <FormArray>this.formProduct.controls['sizes'];
