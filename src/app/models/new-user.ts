@@ -4,4 +4,5 @@ export class NewUser {
   password: string;
   email: string;
   authorities: string[];
+  idStudent: number;
 }

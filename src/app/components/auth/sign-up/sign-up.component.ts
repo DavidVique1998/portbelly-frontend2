@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtDto } from 'src/app/models/jwt-dto';
 import { LoginUser } from 'src/app/models/login-user';
 import { NewUser } from 'src/app/models/new-user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +19,7 @@ export class SignUpComponent implements OnInit {
   //SignIn
   public formLoginUser: FormGroup;
   public loginUser: LoginUser;
+  private jwtDto: JwtDto;
 
   private isLogged: boolean;
   private isLoginFail: boolean;
@@ -91,16 +93,26 @@ export class SignUpComponent implements OnInit {
     }
 
     this.authService.signIn(this.loginUser).subscribe(result => {
-      alert('Usuario Logeado');
+      this.jwtDto = result;
+
       //Developer
       console.log('Usuario logeado, token verificar, función onSubmit');
+      this.onReset();
       this.isLogged = true;
       this.isLoginFail = false;
-      this.tokenService.setToken(result.token);
-      this.tokenService.setUserName(result.userName);
-      this.tokenService.setAuthorities(result.authorities);
+      this.tokenService.setToken(this.jwtDto.access_token);
+      this.tokenService.setUserName(this.jwtDto.username);
+      let roles = [];
+      if (this.jwtDto.authorities) {
+        this.jwtDto.authorities.forEach(element => {
+          roles.push(element.name);
+        });
+      }
+      this.tokenService.setAuthorities(roles);
       this.tokenService.isLogged();
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
+      window.location.reload();
+      alert('Usuario Logeado');
     }, err => {
       this.isLogged = false;
       this.isLoginFail = true;

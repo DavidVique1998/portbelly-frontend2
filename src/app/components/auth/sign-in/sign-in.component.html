@@ -1,18 +1,18 @@
-<h4>Login or Register</h4>
+<h4>Ingreso o registro</h4>
 <form
   [formGroup]="formLoginUser"
   (ngSubmit)="onSubmit()"
   class="aa-login-form"
   action=""
 >
-  <label for="">Username or Email address<span>*</span></label>
+  <label for="">Nombre de usuario<span>*</span></label>
   <input
     type="text"
     placeholder="Username"
     formControlName="userNameL"
     [(ngModel)]="loginUser.userName"
   />
-  <label for="">Password<span>*</span></label>
+  <label for="">Contraseña<span>*</span></label>
   <input
     type="password"
     placeholder="Password"
@@ -25,17 +25,17 @@
     (click)="onSubmit()"
     [attr.data-dismiss]="'modal'"
   >
-    Login
+    Ingresar
   </button>
   <label for="rememberme" class="rememberme"
-    ><input type="checkbox" id="rememberme" /> Remember me
+    ><input type="checkbox" id="rememberme" /> Recuerdame
   </label>
   <p class="aa-lost-password">
-    <a href="#">Lost your password?</a>
+    <a href="#">Perdiste tu contraseña?</a>
   </p>
   <div class="aa-register-now">
-    Don't have an account?<a routerLink="/signup" data-dismiss="modal"
-      >Register now!</a
+    No tiene una cuenta?<a routerLink="/signup" data-dismiss="modal"
+      >Registrate ahora</a
     >
   </div>
 </form>

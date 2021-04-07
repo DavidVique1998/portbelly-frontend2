@@ -1,6 +1,17 @@
 export class JwtDto {
-  token: string;
-  typw: string;
-  userName: string;
-  authorities: string[];
+  access_token: string;
+  token_type: string;
+  refresh_token: string;
+  expires_in: number;
+  scope: string;
+  id: number;
+  email: string;
+  username: string;
+  jti: string;
+  authorities: Authorities[];
+}
+
+export class Authorities {
+  id: number;
+  name: string;
 }

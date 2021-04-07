@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  rootUrl: "http://localhost:9090/api"
+  rootUrl: "http://localhost:8090/api",
+  username: "frontendapp",
+  password: "12345"
+
 };
 
 /*

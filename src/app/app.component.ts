@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Student } from './models/Enrollment/student';
 import { NewUser } from './models/new-user';
 import { AuthService } from './services/auth.service';
+import { PaymentService } from './services/enrollment/payment.service';
+import { StudentService } from './services/enrollment/student.service';
 import { TokenService } from './services/token.service';
 
 @Component({
@@ -13,14 +16,25 @@ export class AppComponent implements OnInit {
   title = 'frontend-portbelly';
   isLogged: boolean = false;
   user: NewUser;
-  constructor(private authService: AuthService, private tokenService: TokenService,) {
+  student: Student;
+  constructor(private tokenService: TokenService, private studentService: StudentService, private paymentService: PaymentService) {
   }
   ngOnInit(): void {
   }
 
+  getStudentByIdUser() {
+    this.studentService.getStudentByIdUser(this.user.idStudent).subscribe(result => {
+      this.student = result;
+    }, err => {
+      console.log(err)
+    })
+  }
+
+
   onSignOut(): void {
     this.tokenService.signOut();
     this.isLogged = false;
+    this.user = null;
   }
 
   // Paso 6 Comparamos en donde querramos muy importante hacer este paso para cada rol y apoyarse del guardian
