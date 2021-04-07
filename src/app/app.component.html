@@ -91,40 +91,43 @@
                 <span class="fas fa-chalkboard"> </span>
 
                 <span class="aa-cart-title">Pagos</span>
-                <span class="aa-cart-notify">2</span>
+                <span class="aa-cart-notify" *ngIf="this.payments == null">{{
+                  0
+                }}</span>
+                <span class="aa-cart-notify" *ngIf="this.payments != null">{{
+                  this.payments?.length
+                }}</span>
               </a>
               <div class="aa-cartbox-summary">
                 <ul>
-                  <li>
+                  <li *ngFor="let item of this.payments; let i = index">
                     <!-- <a class="aa-cartbox-img" href="#"
                       ><img src="../assets/img/woman-small-2.jpg" alt="img"
                     /></a> -->
                     <div class="aa-cartbox-info">
-                      <h4><a>Razón del pago</a></h4>
-                      <p>$250</p>
+                      <h4>
+                        <a>{{ item.type }}</a>
+                      </h4>
+                      <p>{{ item.quantity + "$" }}</p>
+                      <small>
+                        {{ item.date | date: "mediumDate" }}
+                      </small>
                     </div>
-                    <a class="aa-remove-product" href="#"
+                    <!-- <a class="aa-remove-product" (click)="onDeletePayment(i)"
                       ><span class="fa fa-times"></span
-                    ></a>
-                  </li>
-                  <li>
-                    <!-- <a class="aa-cartbox-img" href="#"
-                      ><img src="../assets/img/woman-small-1.jpg" alt="img"
-                    /></a> -->
-                    <div class="aa-cartbox-info">
-                      <h4><a>Razón del pago</a></h4>
-                      <p>$250</p>
-                    </div>
-                    <a class="aa-remove-product" href="#"
-                      ><span class="fa fa-times"></span>
-                    </a>
+                    ></a> -->
                   </li>
                   <li>
                     <span class="aa-cartbox-total-title"> Total </span>
-                    <span class="aa-cartbox-total-price"> $500 </span>
+                    <span class="aa-cartbox-total-price">{{
+                      this.total + "$"
+                    }}</span>
                   </li>
                 </ul>
-                <a class="aa-cartbox-checkout aa-primary-btn" routerLink="/"
+                <a
+                  *ngIf="this.total != 0"
+                  class="aa-cartbox-checkout aa-primary-btn"
+                  routerLink="/"
                   >Pagar</a
                 >
               </div>

@@ -17,7 +17,7 @@ import { interceptorProvider } from './interceptors/service.interceptor';
 import { MediatorComponent } from './components/mediator/mediator.component';
 import { ProductListPublicComponent } from './components/public/product-list-public/product-list-public.component';
 import { ProductViewPublicComponent } from './components/public/product-view-public/product-view-public.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { ProductViewPublicComponent } from './components/public/product-view-pub
     ReactiveFormsModule,
     NgxDropzoneModule,
     FileUploadModule,
+    NgxPaginationModule
   ],
   providers: [interceptorProvider],
   bootstrap: [AppComponent]

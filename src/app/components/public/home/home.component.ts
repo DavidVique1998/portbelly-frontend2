@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   subjectsNrc: SubjectNrc[];
   subjectsNrcView: SubjectNrc[];
   enrollments: Enrollment[];
+  p: number = 1;
   public formSearch: FormGroup;
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private tokenService: TokenService, private studentService: StudentService, private subjectService: SubjectService, private enrollmentService: EnrollmentService) {
     this.search = null;
@@ -58,6 +59,12 @@ export class HomeComponent implements OnInit {
       this.subjectsNrcView = this.subjectsNrc;
     }, err => {
       console.log(err)
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Sin materias',
+        showConfirmButton: true,
+      })
     })
   }
   //Student
@@ -67,19 +74,22 @@ export class HomeComponent implements OnInit {
       this.getAllSubjectNrc();
       this.getStudentByIdUser();
       this.getEnrollmentsByIdStudent();
-
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Informacón cargada correctamente',
+        showConfirmButton: false,
+        timer: 2500
+      })
     }, err => {
       console.log(err)
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Algo salio mal porfavor vuelve recargar la página',
+        showConfirmButton: true,
+      })
     })
-
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Informacón cargada correctamente',
-      showConfirmButton: false,
-      timer: 2500
-    })
-
   }
   //Enrollments
   getEnrollmentsByIdStudent() {
@@ -87,6 +97,12 @@ export class HomeComponent implements OnInit {
       this.enrollments = result;
     }, err => {
       console.log(err)
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Sin matriculas',
+        showConfirmButton: true,
+      })
     })
   }
   //Delete Enrollment
