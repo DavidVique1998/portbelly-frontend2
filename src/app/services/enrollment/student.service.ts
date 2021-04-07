@@ -16,7 +16,6 @@ export class StudentService {
   httpOptionsJsonToken = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
       Authorization: 'Bearer ' + this.tokenService.getToken(),
 
     })

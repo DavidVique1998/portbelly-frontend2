@@ -5,7 +5,7 @@ import { JwtDto } from 'src/app/models/jwt-dto';
 import { LoginUser } from 'src/app/models/login-user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -70,14 +70,24 @@ export class SignInComponent implements OnInit {
       }
       this.tokenService.setAuthorities(roles);
       this.tokenService.isLogged();
-      //this.router.navigate(['']);
-      //alert('Usuario Logeado');
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Información cargada correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }, err => {
       this.isLogged = false;
       this.isLoginFail = true;
       this.errMss = err.error.message;
       console.error(this.errMss);
-      alert(this.errMss);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Algo salio mal porfavor vuelve a intentar',
+        showConfirmButton: true,
+      })
     })
   }
   /**

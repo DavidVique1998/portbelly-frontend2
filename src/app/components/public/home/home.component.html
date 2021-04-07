@@ -41,7 +41,7 @@
   </section>
   <!-- / Promo section -->
 
-  <!-- Subscribe section -->
+  <!-- Search section -->
 
   <section id="aa-subscribe" *ngIf="this.logged">
     <div class="container">
@@ -53,7 +53,7 @@
             <form
               [formGroup]="formSearch"
               class="aa-subscribe-form"
-              (ngSubmit)="onSubmit()"
+              (ngSubmit)="onSearch()"
               action=""
             >
               <input
@@ -64,15 +64,15 @@
                 [(ngModel)]="this.search"
                 formControlName="search"
               />
-              <input type="submit" value="BUSCAR" (click)="onSubmit()" />
+              <input type="submit" value="BUSCAR" (click)="onSearch()" />
             </form>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- / Subscribe section -->
-
+  <!-- / End Search section -->
+  <!-- / Subscription section -->
   <div class="container" *ngIf="this.logged">
     <table class="table">
       <thead>
@@ -81,7 +81,7 @@
           <th scope="col">Cupos</th>
           <th scope="col">Materia</th>
           <th scope="col">Docente</th>
-          <th scope="col">Acciones</th>
+          <th scope="col">Matricularme</th>
         </tr>
       </thead>
       <tbody>
@@ -100,26 +100,29 @@
             <button
               type="button"
               class="btn btn-success"
-              (click)="onSubmit(item.id)"
+              (click)="onCreateEnrollment(item.id)"
             >
-              Success
+              Aceptar
             </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  <!-- /End Subscription section -->
 </div>
+
 <div id="schedulle" class="filter">
   <section id="aa-subscribe" *ngIf="this.logged">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="aa-subscribe-area">
-            <h3>Horario</h3>
+            <h3>DATOS</h3>
           </div>
-          <table class="table">
-            <thead class="thead-dark">
+          <!-- My Student -->
+          <table class="table table-striped table-dark">
+            <thead>
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nivel</th>
@@ -154,9 +157,78 @@
               </tr>
             </tbody>
           </table>
-          <!-- End Home -->
+          <!-- Fin my student -->
+          <div class="aa-subscribe-area">
+            <h3>Horario</h3>
+          </div>
+          <!-- My Enrollments -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nrc</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Evaluación</th>
+                <th scope="col">Horario</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of this.enrollments">
+                <th scope="row">{{ item.id }}</th>
+                <td>{{ item.subjectNrc.nrc }}</td>
+                <td>{{ item.subjectNrc.subject.name }}</td>
+                <td>
+                  {{
+                    item.type?.toString() + "-" + item.price?.toString() + "$"
+                  }}
+                </td>
+                <td>{{ item.evaluation }}</td>
+                <!-- Schedulles -->
+                <td>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Día</th>
+                        <th scope="col">Comienza</th>
+                        <th scope="col">Termina</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let itemSchedulle of item.subjectNrc.shceduller;
+                          let i = index
+                        "
+                      >
+                        <th scope="row">{{ i }}</th>
+                        <td>{{ itemSchedulle.day }}</td>
+                        <td>
+                          {{ itemSchedulle.startTime | date: "shortTime" }}
+                        </td>
+                        <td>{{ itemSchedulle.entTime | date: "shortTime" }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <!-- End Schedulles -->
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="onDeleteEnrollment(item.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- End my Enrollments -->
         </div>
       </div>
     </div>
   </section>
 </div>
+<!-- Fin my Home -->

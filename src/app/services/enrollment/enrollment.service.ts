@@ -29,8 +29,8 @@ export class EnrollmentService {
     return this.httpClient.get<Enrollment[]>(this.authUrl + '/enrollment-repository/enrollment/student/search/idStudent/' + id, this.httpOptionsJsonToken);
   }
 
-  public deleteByIdEnrollmentAndIdStudent(idEnrollment: number, idStudent: number,): Observable<any> {
-    return this.httpClient.delete<any>(this.authUrl + '/enrollment-repository/enrollment/student/delete/' + idEnrollment + '/' + idStudent, this.httpOptionsJsonToken);
+  public deleteByIdEnrollmentAndIdStudent(idEnrollment: number): Observable<any> {
+    return this.httpClient.delete<any>(this.authUrl + '/enrollment-repository/enrollment/student/delete/' + idEnrollment, this.httpOptionsJsonToken);
   }
 
   public createByIdEnrollmentAndIdStudent(idEnrollment: number, idStudent: number,): Observable<Enrollment> {

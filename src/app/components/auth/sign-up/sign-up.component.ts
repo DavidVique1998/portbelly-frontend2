@@ -6,7 +6,7 @@ import { LoginUser } from 'src/app/models/login-user';
 import { NewUser } from 'src/app/models/new-user';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -112,12 +112,23 @@ export class SignUpComponent implements OnInit {
       this.tokenService.isLogged();
       //this.router.navigate(['']);
       window.location.reload();
-      alert('Usuario Logeado');
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Información cargada correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }, err => {
       this.isLogged = false;
       this.isLoginFail = true;
       this.errMss = err.error.message;
-      console.error(this.errMss);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Algo salio mal porfavor vuelve a intentar',
+        showConfirmButton: true,
+      })
     })
   }
 

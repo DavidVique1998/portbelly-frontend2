@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
 import { PaymentService } from './services/enrollment/payment.service';
 import { StudentService } from './services/enrollment/student.service';
 import { TokenService } from './services/token.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,13 @@ export class AppComponent implements OnInit {
     this.tokenService.signOut();
     this.isLogged = false;
     this.user = null;
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Saliste correctamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   // Paso 6 Comparamos en donde querramos muy importante hacer este paso para cada rol y apoyarse del guardian
